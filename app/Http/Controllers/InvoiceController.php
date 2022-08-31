@@ -80,7 +80,7 @@ class InvoiceController extends Controller
     
     public function getInvoiceByOrderId($odr_id){
         $data =  Invoice::where("order_id",$odr_id)->get();
-        if($data) {
+        if(count($data)) {
             return response()->json([
                 "success" => "true",
                 "code" => 201,
@@ -95,9 +95,27 @@ class InvoiceController extends Controller
         ],400);
     }
     
+    public function getInvoicesOfDealerId($odr_id){
+        $data =  Invoice::where("dealer_id",$odr_id)->get();
+        if(count($data)) {
+            return response()->json([
+                "success" => "true",
+                "code" => 201,
+                "Total Count of Invoices of Dealer "=> count($data),
+                "message" => "Invoice of Order ID $odr_id is: ",
+                "data" => $data
+            ],201);
+        }
+        return response()->json([
+            "success" => "false",
+            "code" => 400,
+            "message" => "No Invoice found of Order ID $odr_id"
+        ],400);
+    }
+    
     public function getInvoiceByVehicleId($vid){
         $data =  Invoice::where("vehicle_id",$vid)->get();
-        if($data) {
+        if(count($data)) {
             return response()->json([
                 "success" => "true",
                 "code" => 201,
@@ -114,7 +132,7 @@ class InvoiceController extends Controller
     
     public function getInvoiceByTransactionId($txn_id){
         $data =  Invoice::where("transaction_id",$txn_id)->get();
-        if($data) {
+        if(count($data)) {
             return response()->json([
                 "success" => "true",
                 "code" => 201,
