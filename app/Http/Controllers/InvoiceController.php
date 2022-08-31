@@ -62,19 +62,19 @@ class InvoiceController extends Controller
 
     public function removeInvoice(Request $request)
     {
-        $userFind = Invoice::find($request->input('id'));
-        $userDelete = Invoice::destroy($request->input('id'));
-        if ($userDelete) {
+        $invoiceFind = Invoice::find($request->input('id'));
+        $invoiceDelete = Invoice::destroy($request->input('id'));
+        if ($invoiceDelete) {
             return response()->json([
                 "success" => "true",
                 "code" => 200,
-                "message" => "User data with ID = $userFind->id deleted successfully",
+                "message" => "Invoice with invoice-id $invoiceFind->id deleted successfully",
             ], 200);
         }
         return response()->json([
             "success" => "false",
             "code" => 400,
-            "message" => "No Invoice found of Order ID $userFind->id"
+            "message" => "No Invoice found of given invoice id $request->id "
         ],400);
     }
     
