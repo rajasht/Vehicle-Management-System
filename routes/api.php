@@ -32,6 +32,7 @@ Route::put('/users/{id}',[UserController::class,'update']);
 Route::delete('/users',[UserController::class,'destroy']);
 Route::get('/users/interested',[UserController::class,'getCustomers']);
 Route::patch('/user/update-user-type',[UserController::class,'updateUserType']);
+Route::get('/users/profile/{id}',[UserController::class,'profileDetailsById']);
 
 Route::get('allbikes',[BikeController::class,'getAllBikes']);
 Route::get('allactivebikes',[BikeController::class,'getAllActiveBikes']);

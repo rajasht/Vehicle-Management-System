@@ -251,4 +251,26 @@ class UserController extends Controller
                 ['message'=>'user type udated succesfully.'],202);
         }
     }
+
+    public function profileDetailsById($userId)
+    {
+        $user = User::find($userId);
+        if ($user) {
+            return response()->json([
+                "success" => "true",
+                "code" => 200,
+                "message" => "User data found where ID is equal to $userId",
+                "First Name" => $user->first_name,
+                "Last Name" => $user->last_name,
+                "Phone Number" => $user->phone,
+                "Email" => $user->email,
+                "Address" => $user->address
+            ], 200);
+        }
+        return response()->json([
+            "status" => "fail",
+            "code" => 404,
+            "message" => "User data not found"
+        ], 404);
+    }
 }
