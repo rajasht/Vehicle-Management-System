@@ -62,25 +62,25 @@ class InvoiceController extends Controller
 
     public function removeInvoice(Request $request)
     {
-        $userFind = Invoice::find($request->input('id'));
-        $userDelete = Invoice::destroy($request->input('id'));
-        if ($userDelete) {
+        $invoiceFind = Invoice::find($request->input('id'));
+        $invoiceDelete = Invoice::destroy($request->input('id'));
+        if ($invoiceDelete) {
             return response()->json([
                 "success" => "true",
                 "code" => 200,
-                "message" => "User data with ID = $userFind->id deleted successfully",
+                "message" => "Invoice with invoice-id $invoiceFind->id deleted successfully",
             ], 200);
         }
         return response()->json([
             "success" => "false",
             "code" => 400,
-            "message" => "No Invoice found of Order ID $userFind->id"
+            "message" => "No Invoice found of given invoice id $request->id "
         ],400);
     }
     
     public function getInvoiceByOrderId($odr_id){
         $data =  Invoice::where("order_id",$odr_id)->get();
-        if($data) {
+        if(count($data)) {
             return response()->json([
                 "success" => "true",
                 "code" => 201,
@@ -95,9 +95,27 @@ class InvoiceController extends Controller
         ],400);
     }
     
+    public function getInvoicesOfDealerId($odr_id){
+        $data =  Invoice::where("dealer_id",$odr_id)->get();
+        if(count($data)) {
+            return response()->json([
+                "success" => "true",
+                "code" => 201,
+                "Total Count of Invoices of Dealer "=> count($data),
+                "message" => "Invoice of Order ID $odr_id is: ",
+                "data" => $data
+            ],201);
+        }
+        return response()->json([
+            "success" => "false",
+            "code" => 400,
+            "message" => "No Invoice found of Order ID $odr_id"
+        ],400);
+    }
+    
     public function getInvoiceByVehicleId($vid){
         $data =  Invoice::where("vehicle_id",$vid)->get();
-        if($data) {
+        if(count($data)) {
             return response()->json([
                 "success" => "true",
                 "code" => 201,
@@ -114,7 +132,7 @@ class InvoiceController extends Controller
     
     public function getInvoiceByTransactionId($txn_id){
         $data =  Invoice::where("transaction_id",$txn_id)->get();
-        if($data) {
+        if(count($data)) {
             return response()->json([
                 "success" => "true",
                 "code" => 201,
