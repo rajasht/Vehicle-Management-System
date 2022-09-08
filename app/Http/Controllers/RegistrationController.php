@@ -34,11 +34,20 @@ class RegistrationController extends Controller
         $result = $user->save();
     
         if($result){
-            return ["Result"=>"User Added Successfully."];
+            return response()->json([
+                "success" => "true",
+                "code" => 200,
+                "message" => "New User Creted Successfully",
+                "data" => $user
+            ], 200);
         }
-        else{
-            return ["Result"=>"User Not Added."];
-        }
+        return response()->json([
+            "status" => "fail",
+            "code" => 400,
+            "message" => "New User Creation Failed"
+        ], 400);
     }
+
+    
 
 }

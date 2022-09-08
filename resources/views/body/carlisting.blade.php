@@ -18,7 +18,7 @@
                   placeholder="Search Car Name, Brand, Transmission type, Fuel type" value="{{$search ?? ''}}">
                 </div>
                 <button class="btn btn-primary">Search</button>
-                <a href="{{url('/dashboard')}}">
+                <a href="{{url('/profile/customer')}}">
                     <button class="btn btn-primary" type="button">Reset</button>
                 </a>
             </form>

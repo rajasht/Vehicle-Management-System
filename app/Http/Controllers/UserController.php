@@ -273,4 +273,5 @@ class UserController extends Controller
             "message" => "User data not found"
         ], 404);
     }
+    
 }

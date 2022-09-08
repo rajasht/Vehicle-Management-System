@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CarController extends Controller
 {
@@ -263,7 +265,7 @@ class CarController extends Controller
         return view('dashboard')->with($data);
     }
     
-    public function carsCustomers(Request $req)
+    public function customerDashboard(Request $req)
     {
         if (session()->has('email')) 
         {    
@@ -284,6 +286,27 @@ class CarController extends Controller
             return view('profile.customer')->with($data);
         }
         return view('login');
+    }
+
+    public function show($dealer_id)
+    {
+
+        // $dealer = User::find($dealer_id);
+        // $dealer_name = $dealer->first_name." ".$dealer->last_name;
+        // Echo "User Name : ".$dealer_name;
+
+        $details = DB::table('users')
+        ->join('cars','users.id','=','cars.user_id')
+        ->where('user_id',$dealer_id)
+        ->get();
+        
+        $datacount = Count($details);
+        
+        // Echo "\nTotal Cars : ".$datacount."\n".$details;
+
+        $data = compact('details');
+        return view('profile.dealer')->with($data);
+        
     }
 
 }

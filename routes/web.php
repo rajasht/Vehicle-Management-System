@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddCarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CarController;
@@ -23,7 +24,7 @@ Route::get('/', function () {
 Route::get('/register',[RegistrationController::class,'index']);
 Route::post('/register',[RegistrationController::class,'register']);
 
-Route::get('login',[CarController::class,'carsCustomers']);
+Route::get('login',[CarController::class,'customerDashboard']);
 
 Route::get('logout', function () {
     if (session()->has('email')) {
@@ -44,3 +45,9 @@ Route::post('getcar',[CarController::class,'carsDashboard']);
 
 
 Route::view('mycart','profile.mycart');
+Route::get('dealer/{id}',[CarController::class,'show']);
+Route::get('/addcar',[AddCarController::class,'index']);
+Route::post('/addcar',[AddCarController::class,'carDetailsToAdmin']);
+
+
+Route::get('dealer-car/{id}',[CarController::class,'show']);

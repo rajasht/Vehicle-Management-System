@@ -11,7 +11,7 @@
   </head>
   <body>
     <div class="container fluid bg-dark">
-         <div class="container">
+        <div class="container">
             <nav class="navbar navbar-expand-sm">
                 <a class="navbar-brand" href="#" style="color: white">Vehicle Management System</a>
                 <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse"
@@ -21,7 +21,10 @@
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url('/logout')}}" style="color: white">Logout</a>
+                        <a class="nav-link" href="{{url('/register')}}" style="color: white">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url('/login')}}" style="color: white">Login</a>
                     </li>
                 </ul>
     
