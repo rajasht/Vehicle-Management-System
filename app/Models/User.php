@@ -25,7 +25,8 @@ class User extends Authenticatable
         'email',
         'password',
         'user_type',
-        'interest'
+        'interest',
+        'car_id'
     ];
 
 
@@ -36,6 +37,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'integer' => 'user_type',
-        'integer' => 'interest'
+        'integer' => 'interest',
+        'integer' => 'car_id'
     ];
 }
