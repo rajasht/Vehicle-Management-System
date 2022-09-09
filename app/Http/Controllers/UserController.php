@@ -40,6 +40,7 @@ class UserController extends Controller
                 "success" => "true",
                 "code" => 200,
                 "message" => "User data found",
+                "Total User:" => count($user),
                 "data" => $user
             ], 200);
         }

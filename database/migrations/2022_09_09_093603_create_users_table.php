@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('user_type')->default(1);
             $table->integer('interest');
+            $table->integer('car_id');
             $table->timestamps();
         });
     }
