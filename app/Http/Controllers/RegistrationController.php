@@ -30,6 +30,7 @@ class RegistrationController extends Controller
         $user->email = $req->email;
         $user->address = $req->address;
         $user->password = $req->password;
+        $user->interest = 1;
         $user->user_type = 1;
         $result = $user->save();
     

@@ -90,10 +90,10 @@ class UserController extends Controller
         if ($user) {
             $userMatchedWithEmail = User::where('email', '=', $request->email)->get();
             $userAdmin = User::where('user_type', '=', 3)->get();
-            $userAdminFind = User::find($userAdmin[0]->id);
-            $userCustomer = User::find($userMatchedWithEmail[0]->id);
-            SendRegisteredCustomerMailJob::dispatch($userCustomer)->delay(now()->addSeconds(1));
-            SendLeadsToAdminMailJob::dispatch($userAdminFind, $userCustomer)->delay(now()->addSeconds(1));
+            // $userAdminFind = User::find($userAdmin[0]->id);
+            // $userCustomer = User::find($userMatchedWithEmail[0]->id);
+            // SendRegisteredCustomerMailJob::dispatch($userCustomer)->delay(now()->addSeconds(1));
+            // SendLeadsToAdminMailJob::dispatch($userAdminFind, $userCustomer)->delay(now()->addSeconds(1));
             return response()->json([
                 "success" => "true",
                 "code" => 201,
