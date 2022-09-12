@@ -90,10 +90,10 @@ class UserController extends Controller
         if ($user) {
             $userMatchedWithEmail = User::where('email', '=', $request->email)->get();
             $userAdmin = User::where('user_type', '=', 3)->get();
-            // $userAdminFind = User::find($userAdmin[0]->id);
-            // $userCustomer = User::find($userMatchedWithEmail[0]->id);
-            // SendRegisteredCustomerMailJob::dispatch($userCustomer)->delay(now()->addSeconds(1));
-            // SendLeadsToAdminMailJob::dispatch($userAdminFind, $userCustomer)->delay(now()->addSeconds(1));
+            $userAdminFind = User::find($userAdmin[0]->id);
+            $userCustomer = User::find($userMatchedWithEmail[0]->id);
+            SendRegisteredCustomerMailJob::dispatch($userCustomer)->delay(now()->addSeconds(1));
+            SendLeadsToAdminMailJob::dispatch($userAdminFind, $userCustomer)->delay(now()->addSeconds(1));
             return response()->json([
                 "success" => "true",
                 "code" => 201,
@@ -289,5 +289,27 @@ class UserController extends Controller
             "code" => 404,
             "message" => "User data not found"
         ], 404);
+    }
+
+    public function dealerDataShow($uid)
+    {
+
+        $details = DB::table('cars')
+        ->join('users','cars.id','=','users.car_id')
+        ->where('user_id',$uid)
+        ->get();
+        
+        $datacount = Count($details);
+
+        if($datacount>0)
+        {
+
+            $data = compact('details');
+            return view('profile.dealer')->with($data);
+        }
+        else{
+            Return "No cars Found/Not a Dealer.";
+        }
+        
     }
 }
