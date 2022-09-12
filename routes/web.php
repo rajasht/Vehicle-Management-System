@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\AddCarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +47,6 @@ Route::get('profile/customer',[CarController::class,'carsCustomer'])->name('prof
 
 Route::view('visitor', 'profile/visitor');
 // Route::view('profile/customer', 'profile/customer');
-Route::view('profile/dealer', 'profile/dealer');
 Route::view('profile/admin', 'profile/admin');
 
 Route::post('user_login', [UserController::class, 'userLogin']);
@@ -56,3 +56,10 @@ Route::post('getcar',[CarController::class,'carsDashboard']);
 
 
 Route::view('mycart','profile.mycart');
+Route::get('/addcar',[AddCarController::class,'index']);
+Route::post('/addcar',[AddCarController::class,'carDetailsToAdmin']);
+
+
+Route::view('profile/dealer','profile/dealer');
+
+Route::get('dealer-data/{id}',[UserController::class,'dealerDataShow']);

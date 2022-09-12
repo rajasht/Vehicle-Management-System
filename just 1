@@ -1,0 +1,42 @@
+# Set up on Ubuntu
+Install Python3
+Install Pip
+
+# Clone Project
+# Setup virtual environment
+In project folder install and create virtual environment
+# install virtual environment
+$ sudo pip3 install virtualenv
+
+# create virtual environment
+$ virtualenv .virtualenvironmentname
+
+# activate virtual environment
+$ source .virtualenvironmentname/bin/activate
+
+# Install Selenium
+$ pip3 install selenium
+
+# Install Chrome Driver
+Check your crome version 
+$ wget https://chromedriver.storage.googleapis.com/104.0.5112.79/chromedriver_linux64.zip
+104.0.5112.79 is my chrome version. You can check yours and check the version in above code.
+# Unzip chrome Driver
+$ unzip chromedriver_linux64.zip -d drivers/
+Delete the zip file
+
+# create env file and update the chrome path
+
+# install Pytest
+$ pip install pytest
+$ pip install pytest-html
+
+# install allure
+$ pip install allure-pytest
+
+# install Decouple for using env variables
+$ pip install python-decouple
+
+# Run Full Suite 
+$ pytest fullSuite.py --html=report.html --self-contained-html
+This will run all test cases at once

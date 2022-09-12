@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Constraint\Count;
 
 class CarController extends Controller
 {
@@ -19,6 +22,7 @@ class CarController extends Controller
                 "success" => "true",
                 "code" => 200,
                 "message" => "Car data found",
+                "Total Cars : " => Count($car),
                 "data" => $car
             ],200);
         }
@@ -284,4 +288,6 @@ class CarController extends Controller
         $data = compact('cars');
         return view('profile.customer')->with($data);
     }
+
+    
 }
