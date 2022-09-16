@@ -18,3 +18,4 @@ class AddCarController extends Controller
         return view('addcarresponse')->with($data);
     }
 }
+

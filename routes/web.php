@@ -56,7 +56,7 @@ Route::post('getcar',[CarController::class,'carsDashboard']);
 
 
 Route::view('mycart','profile.mycart');
-Route::get('/addcar',[AddCarController::class,'index']);
+Route::get('/addcar',[AddCarController::class,'index'])->name('addcar');
 Route::post('/addcar',[AddCarController::class,'carDetailsToAdmin']);
 
 

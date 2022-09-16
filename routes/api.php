@@ -66,11 +66,12 @@ Route::get('cars/price/{price_start}/{price_end}',[CarController::class,'getBetw
 
 Route::post('/add-inventory',[InventoryController::class,'store']);
 Route::get('/inventory-data',[InventoryController::class,'getInventorydata']);
-Route::get('/inventory-data/{id}',[InventoryController::class,'getInventoryDataById']);
+Route::get('/inventory-data/{id}',[InventoryController::class,'getInventoryDataById'])->whereNumber('id');
 Route::delete('/remove-inventory-data',[InventoryController::class,'removeInventory']);
-Route::patch('/update-inventory-status/{id}/{sts}',[InventoryController::class,'updateInventoryStatus']);
-Route::get('/inventory-status/{id}',[InventoryController::class,'getInventoryStatus']);
-Route::get('/inventories-by-status-code/{id}',[InventoryController::class,'getStatusWiseInventoryList']);
+Route::patch('/update-inventory-status/{id}/{sts}',[InventoryController::class,
+            'updateInventoryStatus'])->whereNumber(['id','sts']);
+Route::get('/inventory-status/{id}',[InventoryController::class,'getInventoryStatus'])->whereNumber('id');
+Route::get('/inventories-by-status-code/{stc}',[InventoryController::class,'getStatusWiseInventoryList'])->whereNumber('stc');
 Route::get('/inventories-by-vehicle-type-code/{id}',[InventoryController::class,'getVehicleTypeWiseInventoryList']);
 Route::get('/inventories-by-sold-to-id/{id}',[InventoryController::class,'getInventoryListBySoldToId']);
 
