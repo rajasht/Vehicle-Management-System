@@ -32,6 +32,7 @@ class InventoryController extends Controller
                 "success" => "true",
                 "code" => 201,
                 "message" => "Inventory data are: ",
+                "Inventory Count " => Count($data),
                 "data" => $data
             ],201);
         }
@@ -63,11 +64,14 @@ class InventoryController extends Controller
     {
         $inventoryFind = Inventory::find($request->input('id'));
         $inventoryDelete = Inventory::destroy($request->input('id'));
+        $inventory_count = count(Inventory::all());
         if($inventoryDelete) {
             return response()->json([
                 "success" => "true",
                 "code" => 200,
                 "message" => "Car data with ID = $inventoryFind->id deleted successfully",
+                "Before deletion Inventory Count "=> $inventory_count+1,
+                "After deletion Inventory Count "=> $inventory_count,
                 "data" => $inventoryFind
             ],200);  
         }
@@ -121,16 +125,16 @@ class InventoryController extends Controller
 
             return response()->json([
                 "success" => "true",
-                "code" => 201,
+                "code" => 200,
                 "message" => "Inventory data of having INVENTORY ID $id is: ",
-                "Status" => $vehicle_status
-            ],201);
+                "status" => $vehicle_status
+            ],200);
         }
         return response()->json([
             "success" => "false",
             "code" => 400,
             "message" => "No Inventory data found of INVENTORY ID $id",
-            "Status" => "Unlisted"
+            "status" => "Unlisted"
         ],400);
     }
 
@@ -142,10 +146,11 @@ class InventoryController extends Controller
         {
             return response()->json([
                 "success" => "true",
-                "code" => 201,
+                "code" => 200,
                 "message" => "Inventory data of having Status Code $sts is: ",
+                "inventory count : " => count($data),
                 "Status" => $data
-            ],201);
+            ],200);
         }
         return response()->json([
             "success" => "false",
@@ -164,7 +169,8 @@ class InventoryController extends Controller
                 "success" => "true",
                 "code" => 201,
                 "message" => "Inventory data of having Vehicle Type code $vt_cd is: ",
-                "Status" => $data
+                "Inventory count : " => count($data),
+                "status" => $data
             ],201);
         }
         return response()->json([
@@ -184,7 +190,8 @@ class InventoryController extends Controller
                 "success" => "true",
                 "code" => 201,
                 "message" => "Inventory data of having Buyer Id $buyer_id is: ",
-                "Status" => $data
+                "inventory count : " => count($data),
+                "status" => $data
             ],201);
         }
         return response()->json([
@@ -193,4 +200,5 @@ class InventoryController extends Controller
             "message" => "Nothing is Sold to User having user-Id $buyer_id"
         ],400);
     }
+
 }

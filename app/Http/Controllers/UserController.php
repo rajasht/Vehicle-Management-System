@@ -84,16 +84,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
         $user = User::create($request->all());
-
-        if ($user) {
-            $userMatchedWithEmail = User::where('email', '=', $request->email)->get();
-            $userAdmin = User::where('user_type', '=', 3)->get();
-            $userAdminFind = User::find($userAdmin[0]->id);
-            $userCustomer = User::find($userMatchedWithEmail[0]->id);
-            SendRegisteredCustomerMailJob::dispatch($userCustomer)->delay(now()->addSeconds(1));
-            SendLeadsToAdminMailJob::dispatch($userAdminFind, $userCustomer)->delay(now()->addSeconds(1));
+        if ($user) 
+        {
+            $userMatchedWithEmail = User::where("email","=",$request->email)->get();
+            $userAdmin = User::where("user_type","=",3)->get();
+            // $userAdminFind = User::find($userAdmin[0]->id);
+        //     $userCustomer = User::find($userMatchedWithEmail[0]->id);
+        //     SendRegisteredCustomerMailJob::dispatch($userCustomer)->delay(now()->addSeconds(1));
+        //     SendLeadsToAdminMailJob::dispatch($userAdminFind, $userCustomer)->delay(now()->addSeconds(1));
             return response()->json([
                 "success" => "true",
                 "code" => 201,
@@ -106,6 +105,7 @@ class UserController extends Controller
             "code" => 400,
             "message" => "Failed to save user data"
         ], 400);
+        
     }
 
     /**
@@ -159,6 +159,8 @@ class UserController extends Controller
         $request->session()->put('u_t', $user_type);
         $request->session()->put('name', $user_first_name);
         $request->session()->put('uid', $user[0]['id']);
+
+        $dealer_profile = 'dealer-data/'.$user[0]['id'];
         
         $userCartData = Cart::where('user_id','=',$user[0]['id'])->get();
 
@@ -177,7 +179,7 @@ class UserController extends Controller
         } else if ($user_type === 1) {
             return redirect('profile/customer');
         } else if ($user_type === 2) {
-            return redirect('profile/dealer');
+            return redirect($dealer_profile);
         } elseif ($user_type === 3) {
             return redirect('profile/admin');
         } else {
@@ -309,7 +311,8 @@ class UserController extends Controller
         }
         else{
             Return "No cars Found/Not a Dealer.";
-        }
-        
+        } 
     }
+
+    
 }

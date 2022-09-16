@@ -19,7 +19,7 @@ class CreateInventoryTable extends Migration
             $table->integer('vehicle_type_id');
             $table->integer('added_by');
             $table->date('added_on');
-            $table->integer('sold_to');
+            $table->integer('sold_to')->nullable();
             $table->integer('status');
             $table->timestamps();
         });
