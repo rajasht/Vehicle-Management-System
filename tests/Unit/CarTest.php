@@ -172,7 +172,7 @@ class CarTest extends TestCase
                         'record_status',
                         'user_id',
                          ]
-                ]
+                 ]
              );
         $this->assertDatabaseHas('cars', $payload);
         $this->assertDatabaseMissing('cars', ["vin" => "4ABCD56EFGH789000"]);

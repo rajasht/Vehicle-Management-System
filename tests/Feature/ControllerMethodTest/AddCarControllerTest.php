@@ -1,35 +1,74 @@
 <?php
-
+/**
+ * Test Cases For Add Car Controller Php File Methods
+ *
+ * PHP version 7.4
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Raja kumar <raja@shorthillstech.com>
+ * @copyright 2022 No Copyright
+ * @license   No Licence
+ * @link      No Link
+ */
 namespace Tests\Feature\ControllerMethodTest;
 
 use Tests\TestCase;
 
+/**
+ * Test cases for :
+ * Rediect to addcar view (positve and negative)
+ * Redirection to addcarresponse view with data (positve and negative)
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Raja kumar <raja@shorthillstech.com>
+ * @copyright 2022 No Copyright
+ * @license   No Licence
+ * @version   Release: 0.1
+ * @link      No Link
+ */
 class AddCarControllerTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     * A positive feature test for Rediect to addcar view
      *
-     * @return void
+     * @test
+     * @return response
      */
-    
-
-    public function test_of_rediect_to_addcar_view_positive()
+    public function rediectToAddcarviewPositive()
     {
+
+        //Act
         // $response = $this->get(route('addcar'));
-        $response = $this->get(url('/addcar'));
-        $response->assertOk();
+        $response = $this->get(url('/addcar'))->assertOk();
+
+        //Assert
         $response->assertViewIs('addcar');
     }
 
-    public function test_of_rediect_to_addcar_view_negative()
+    /**
+     * A negative feature test for Rediect to addcar view
+     *
+     * @test
+     * @return $this
+     */
+    public function rediectToAddcarviewNegative()
     {
-        $response = $this->get(url('/addcar'))->assertOk();
-        $response->assertViewIs('login');
+        $this->get(url('/addcar'))->assertViewMissing('addcar');
     }
 
-    public function test_redirection_to_addcarresponse_view_with_data_positive()
+    /**
+     * A positive feature test for Rediect to addcarresponse view with data
+     *
+     * @test
+     * @return $this
+     */
+    public function redirectionToAddcarresponseViewWithDataPositive()
     {
-        $response = $this->post('/addcar',[
+        $this->post(
+            '/addcar',
+            [
             "car_details"=>
                 ["car_name" => "Dzire",
                 "brand" => "Maruti Suzuki",
@@ -57,15 +96,21 @@ class AddCarControllerTest extends TestCase
                 "record_status"=> 1],
             "user_id"=> 2,
             "listing_status" => "Pending"
-        ]);
-
-        $response->assertOk();
-        $response->assertViewIs('addcarresponse');
+            ]
+        )->assertViewIs('addcarresponse');
     }
     
-    public function test_redirection_to_addcarresponse_view_with_data_negative()
+    /**
+     * A positive feature test for Rediect to addcarresponse view with data
+     *
+     * @test
+     * @return $this
+     */
+    public function redirectionToAddcarresponseViewWithDataNegative()
     {
-        $response = $this->post('/addcar',[
+        $this->post(
+            '/addcar',
+            [
             "car_details"=>
                 ["car_name" => "Dzire",
                 "brand" => "Maruti Suzuki",
@@ -93,10 +138,7 @@ class AddCarControllerTest extends TestCase
                 "record_status"=> 1],
             "user_id"=> 2,
             "listing_status" => "Pending"
-        ]);
-
-        $response->assertOk();
-        $response->assertViewIs('login');
+            ]
+        )->assertViewMissing('addcarresponse');
     }
-
 }

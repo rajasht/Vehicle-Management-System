@@ -19,47 +19,48 @@ class UserTest extends TestCase
     /**
      * A test to check redirection of register button
      *  @test
-     * 
+     *
      * @return void
      */
     public function rendering_user_register_screen()
-     {
+    {
         $response = $this->get('/register');
         $response-> assertStatus(200);
-     }
+    }
     /**
      * A test to check redirection of login button
      *  @test
-     * 
+     *
      * @return void
      */
     public function rendering_login_screen()
-     {
+    {
         $response = $this->get('/login');
         $response-> assertStatus(200);
-     }
+    }
     
      /**
      * A test to check redirection of register button
      *  @test
-     * 
+     *
      * @return void
      */
     public function rendering_order_page()
-     {
+    {
         $response = $this->get('/order');
         $response-> assertStatus(200);
-     }
+    }
 
 
     /**
      * A test to create user and add it into the user table as record
      *  A test to check database element contaings
      *  @test
-     * 
+     *
      * @return void
      */
-    public function user_creation() {
+    public function user_creation()
+    {
     
         $payload = [
             "first_name" => "Rajam",
@@ -88,7 +89,7 @@ class UserTest extends TestCase
                          'interest',
                          'car_id',
                          ]
-                ]
+                 ]
              );
         $this->assertDatabaseHas('users', $payload);
         $this->assertDatabaseMissing('users', ["first_name" => "Sanjay"]);
@@ -98,43 +99,43 @@ class UserTest extends TestCase
      * A test to check to new user duplicacy
      *
      *  @test
-     * 
+     *
      * @return void
      */
 
-     public function new_user_duplicacy()
-     {
+    public function new_user_duplicacy()
+    {
         $user1 = User::make([
-            "first_name" => "Rajat",
-            "last_name" => "patidar",
-            "phone" => "9123880010",
-            "address" => "BD-14, Street No. 2, AC City Peru",
-            "email" => "rajatpa@example.com",
-            "password" => "1200334",
-            "user_type" => 2,
-            "interst" => 1,
-            "car_id" => 17
+           "first_name" => "Rajat",
+           "last_name" => "patidar",
+           "phone" => "9123880010",
+           "address" => "BD-14, Street No. 2, AC City Peru",
+           "email" => "rajatpa@example.com",
+           "password" => "1200334",
+           "user_type" => 2,
+           "interst" => 1,
+           "car_id" => 17
 
         ]);
         $user2 = User::make([
-            "first_name" => "Rani",
-            "last_name" => "Lali",
-            "phone" => "9120003334",
-            "address" => "BZ-13, Street No. 20, ABC City Sumeru",
-            "email" => "rani@example.com",
-            "password" => "117733",
-            "user_type" => 2,
-            "interst" => 1,
-            "car_id" => 19
+           "first_name" => "Rani",
+           "last_name" => "Lali",
+           "phone" => "9120003334",
+           "address" => "BZ-13, Street No. 20, ABC City Sumeru",
+           "email" => "rani@example.com",
+           "password" => "117733",
+           "user_type" => 2,
+           "interst" => 1,
+           "car_id" => 19
         ]);
         $this->assertTrue($user1->email != $user2->email);
-     }
+    }
 
      /**
      * A test to delete user from the user table
      *
      *  @test
-     * 
+     *
      * @return void
      */
     
@@ -142,18 +143,17 @@ class UserTest extends TestCase
     {
             $user = User::factory()->count(1)->make();
             $user = User::first(); // for deleting very first user details
-            if($user)
-            {
-                    $user->delete();
-            }
-            $this->assertTrue(true); 
+        if ($user) {
+                $user->delete();
+        }
+            $this->assertTrue(true);
     }
 
      /**
     * A test to password repeatition during user from the user table
     *
     *  @test
-    * 
+    *
     * @return void
     */
     public function test_Repeat_Password_insertion()
@@ -166,14 +166,15 @@ class UserTest extends TestCase
                 "address" => "A52, Sainik Vihar, New delhi",
                 "password" => "demo12345",
                 ];
-            $this->json('POST', '/register', $userData, ['Accept' => 'application/json'])
-            ->assertStatus(422);
+                $this->json('POST', '/register', $userData, ['Accept' => 'application/json'])
+                ->assertStatus(422);
     }
 
 
-    public function test_get_all_users_route() {
+    public function test_get_all_users_route()
+    {
         
-        $this->post('api/users',[
+        $this->post('api/users', [
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'phone' => "9988123450" ,
@@ -183,7 +184,7 @@ class UserTest extends TestCase
             'user_type' => 1,
             'interest' => 1
         ])->assertCreated();
-        $this->post('api/users',[
+        $this->post('api/users', [
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'phone' => "9988123459" ,
@@ -197,7 +198,8 @@ class UserTest extends TestCase
         $this->get('api/users')->assertStatus(200);
     }
 
-    public function test_get_user_by_id_route() {
+    public function test_get_user_by_id_route()
+    {
         
         $this->post('/api/users', [
             'first_name' => $this->faker->firstName(),
@@ -210,12 +212,13 @@ class UserTest extends TestCase
             'interest' => 1
         ]);
         
-        $this->call('GET','api/users/1')
-            ->assertStatus(200);    
+        $this->call('GET', 'api/users/1')
+            ->assertStatus(200);
     }
     
     
-    public function test_get_customer() {
+    public function test_get_customer()
+    {
         
         $this->post('/api/users', [
             'first_name' => $this->faker->firstName(),
@@ -228,11 +231,12 @@ class UserTest extends TestCase
             'interest' => 1
         ]);
         
-        $this->call('GET','api/users')
-            ->assertStatus(200);    
+        $this->call('GET', 'api/users')
+            ->assertStatus(200);
     }
 
-    public function test_dealer_presense_in_database() {
+    public function test_dealer_presense_in_database()
+    {
         
         $this->post('/api/users', [
             'first_name' => $this->faker->firstName(),
@@ -257,11 +261,8 @@ class UserTest extends TestCase
         ]);
         
         $this
-            ->call('GET','api/users?type=dealer')
+            ->call('GET', 'api/users?type=dealer')
             ->assertStatus(400)
-            ->assertJsonCount(3);   
-            
+            ->assertJsonCount(3);
     }
-            
-    
 }

@@ -21,19 +21,20 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $user = [];
-        if($request->type) {
+        if ($request->type) {
             $userType = $request->type;
-                if($userType === 'admin') {
-                    $userType = 3;
-                }
-                else if($userType === 'dealer') {
-                    $userType = 2;
-                }
-                else $userType = 1;
+            if ($userType === 'admin') {
+                $userType = 3;
+            } else if ($userType === 'dealer') {
+                $userType = 2;
+            } else {
+                $userType = 1;
+            }
 
-            $user = User::where('user_type','=',$userType)->paginate(4);
+            $user = User::where('user_type', '=', $userType)->paginate(4);
+        } else {
+            $user = User::all();
         }
-        else $user = User::all();
         
         if (!$user->isEmpty()) {
             return response()->json([
@@ -77,18 +78,17 @@ class UserController extends Controller
 
     /**
      * Create and store new user in database
-     * 
+     *
      * @Request $request request body
-     * 
+     *
      * @return response
      */
     public function store(Request $request)
     {
         $user = User::create($request->all());
-        if ($user) 
-        {
-            $userMatchedWithEmail = User::where("email","=",$request->email)->get();
-            $userAdmin = User::where("user_type","=",3)->get();
+        if ($user) {
+            $userMatchedWithEmail = User::where("email", "=", $request->email)->get();
+            $userAdmin = User::where("user_type", "=", 3)->get();
             // $userAdminFind = User::find($userAdmin[0]->id);
         //     $userCustomer = User::find($userMatchedWithEmail[0]->id);
         //     SendRegisteredCustomerMailJob::dispatch($userCustomer)->delay(now()->addSeconds(1));
@@ -105,14 +105,13 @@ class UserController extends Controller
             "code" => 400,
             "message" => "Failed to save user data"
         ], 400);
-        
     }
 
     /**
      * Login with email and password with validations
-     * 
+     *
      * @Request $request request body
-     * 
+     *
      * @return response
      */
     public function userLogin(Request $request)
@@ -137,7 +136,7 @@ class UserController extends Controller
             ->where('password', '=', $request->password)->get();
 
 
-        //Authentication    
+        //Authentication
         if (count($user) === 0) {
             return response()->json([
                 "success" => "false",
@@ -162,12 +161,13 @@ class UserController extends Controller
 
         $dealer_profile = 'dealer-data/'.$user[0]['id'];
         
-        $userCartData = Cart::where('user_id','=',$user[0]['id'])->get();
+        $userCartData = Cart::where('user_id', '=', $user[0]['id'])->get();
 
         $userCartVID = [];
-        for($i=0;$i<count($userCartData);$i++) {
-            if($userCartData[$i]->status == 1)
-            $userCartVID[]= $userCartData[$i]->vehicle_type_id;
+        for ($i=0; $i<count($userCartData); $i++) {
+            if ($userCartData[$i]->status == 1) {
+                $userCartVID[]= $userCartData[$i]->vehicle_type_id;
+            }
         }
         $userCartVID = array_unique($userCartVID);
         $request->session()->put('userCartData', $userCartData);
@@ -262,12 +262,15 @@ class UserController extends Controller
         ], 400);
     }
 
-    public function updateUserType(Request $req){
-        if($req->isMethod('patch')){
+    public function updateUserType(Request $req)
+    {
+        if ($req->isMethod('patch')) {
             $userType = $req->input();
-            User::where('id',$userType['id'])->update(['user_type'=>$userType['user_type']]);
+            User::where('id', $userType['id'])->update(['user_type'=>$userType['user_type']]);
             return response()->json(
-                ['message'=>'user type udated succesfully.'],202);
+                ['message'=>'user type udated succesfully.'],
+                202
+            );
         }
     }
 
@@ -297,22 +300,17 @@ class UserController extends Controller
     {
 
         $details = DB::table('cars')
-        ->join('users','cars.id','=','users.car_id')
-        ->where('user_id',$uid)
+        ->join('users', 'cars.id', '=', 'users.car_id')
+        ->where('user_id', $uid)
         ->get();
         
         $datacount = Count($details);
 
-        if($datacount>0)
-        {
-
+        if ($datacount>0) {
             $data = compact('details');
             return view('profile.dealer')->with($data);
+        } else {
+            return "No cars Found/Not a Dealer.";
         }
-        else{
-            Return "No cars Found/Not a Dealer.";
-        } 
     }
-
-    
 }

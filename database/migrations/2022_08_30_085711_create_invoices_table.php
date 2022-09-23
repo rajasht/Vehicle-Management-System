@@ -18,6 +18,7 @@ class CreateInvoicesTable extends Migration
             $table->integer('order_id');
             $table->integer('vehicle_id');
             $table->integer('dealer_id');
+            $table->integer('buyer_id');
             $table->decimal('price');
             $table->decimal('tax_percentage');
             $table->decimal('discount_percentage');
