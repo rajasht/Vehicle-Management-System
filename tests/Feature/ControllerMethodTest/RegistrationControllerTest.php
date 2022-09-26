@@ -40,18 +40,31 @@ class RegistrationControllerTest extends TestCase
      *
      * @return void
      */
-    public function testRegistrationPageRouteURIRendering()
+    public function testRegistrationPageRouteURIRenderingPositive()
     {
         $this->get('/register')->assertOk()->assertViewIs('registration-form');
-    }//end testRegistrationPageRouteURIRendering()
+    }
+
+    /**
+     * A negative feature test for Rediect to addcar view
+     *
+     * @test
+     * @return $this
+     */
+    public function testRegistrationPageRouteURIRenderingNegative()
+    {
+        $this->get(url('/register'))->assertViewMissing('register');
+    }
 
 
     /**
-     * A positive feature test example.
+     * A positive feature test to check User get registered sucessfully
+     * 
+     * @test
      *
      * @return void
      */
-    public function testUserRegistrationWorking()
+    public function userRegistrationSuccessfulPositive()
     {
         // Arrange
         $payload = [
@@ -65,20 +78,25 @@ class RegistrationControllerTest extends TestCase
             'user_type'  => 1,
         ];
 
+        //Act
         $this->json('post', 'api/users', $payload)
             ->assertStatus(Response::HTTP_CREATED);
 
+        //Assert
         $this->assertDatabaseHas('users', $payload);
         $this->assertDatabaseMissing('users', ['first_name' => 'Raja']);
-    }//end testUserRegistrationWorking()
+    }
 
 
     /**
-     * A positive feature test example.
+     * A positive feature test to validate unsucsessful 
+     * registration if any field missing
      *
+     * @test 
+     * 
      * @return void
      */
-    public function testNewUserRegistrationWithoutEmail()
+    public function newUserRegistrationWithoutEmail()
     {
         // Arrange
         $payload = [
@@ -92,44 +110,18 @@ class RegistrationControllerTest extends TestCase
         ];
 
         $this->json('post', 'api/users', $payload)->assertStatus(500);
-    }//end testNewUserRegistrationWithoutEmail()
+    }
 
 
     /**
-     * A positive feature test example.
+     * A positive feature test to check the duplicate user registration
+     * 
+     * @test
      *
      * @return void
      */
-    public function testUserDuplicateRegistration()
+    public function userDuplicateRegistrationPositive()
     {
-        // //Arrange
-        // $user1 = User::make(
-        // [
-        // "first_name" => "Rajat",
-        // "last_name" => "patidar",
-        // "phone" => "9123880010",
-        // "address" => "BD-14, Street No. 2, AC City Peru",
-        // "email" => "rajatpa@example.com",
-        // "password" => "1200334",
-        // "user_type" => 2,
-        // "interst" => 1,
-        // "car_id" => 17
-        // ]
-        // );
-        // $user2 = User::make(
-        // [
-        // "first_name" => "Rani",
-        // "last_name" => "Lali",
-        // "phone" => "9120003334",
-        // "address" => "BZ-13, Street No. 20, ABC City Sumeru",
-        // "email" => "rani@example.com",
-        // "password" => "117733",
-        // "user_type" => 2,
-        // "interst" => 1,
-        // "car_id" => 19
-        // ]
-        // );
-        // $this->assertTrue($user1->email != $user2->email);
         $user_1 = $this->post(
             'api/users',
             [
@@ -156,4 +148,44 @@ class RegistrationControllerTest extends TestCase
 
         $this->assertTrue($user_1 != $user_2);
     }//end testUserDuplicateRegistration()
+    
+    /**
+     * A negative feature test to check the duplicate user registration
+     * 
+     * @test
+     *
+     * @return void
+     */
+    public function userDuplicateRegistrationNegative()
+    {
+        
+        // //Arrange
+        $user1 = User::make(
+            [
+            "first_name" => "Rajat",
+            "last_name" => "patidar",
+            "phone" => "9123880010",
+            "address" => "BD-14, Street No. 2, AC City Peru",
+            "email" => "rajatpa@example.com",
+            "password" => "1200334",
+            "user_type" => 2,
+            "interst" => 1,
+            "car_id" => 17
+            ]
+        );
+        $user2 = User::make(
+            [
+            "first_name" => "Rajat",
+            "last_name" => "patidar",
+            "phone" => "9123880010",
+            "address" => "BD-14, Street No. 2, AC City Peru",
+            "email" => "rajatpa@example.com",
+            "password" => "1200334",
+            "user_type" => 2,
+            "interst" => 1,
+            "car_id" => 17
+            ]
+        );
+        $this->assertTrue($user1->email == $user2->email);
+    }
 }//end class

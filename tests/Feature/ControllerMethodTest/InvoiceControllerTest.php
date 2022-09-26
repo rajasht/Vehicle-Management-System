@@ -515,7 +515,7 @@ class InvoiceControllerTest extends TestCase
         $this->get('api/invoice/order/11003')->assertStatus(200);
         $this->get('api/invoice/order/11004')->assertStatus(200);
         $this->get('api/invoice/order/11005')->assertStatus(200);
-    }//end validOrderIdPassedToMethodPositive()
+    }
 
 
     /**
@@ -613,6 +613,7 @@ class InvoiceControllerTest extends TestCase
 
         // Act
         $this->get('api/invoice/dealer/102')->assertStatus(200);
+        $this->get('api/invoice/dealer/103')->assertStatus(200);
         $this->get('api/invoice/dealer/105')->assertStatus(200);
     }//end validDealerIdPassedToMethodPositive()
 
