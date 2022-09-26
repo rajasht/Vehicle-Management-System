@@ -246,7 +246,7 @@ class InvoiceControllerTest extends TestCase
 
         // Act
         $payload->assertStatus(Response::HTTP_CREATED);
-    }//end invoiceGetAddedPositive()
+    }
 
 
     /**
@@ -967,5 +967,5 @@ class InvoiceControllerTest extends TestCase
 
         // Act
         $this->get('api/invoice/price/1000000/10001')->assertStatus(400);
-    }//end passedMaxPriceIsNotLessThanMinPrice()
-}//end class
+    }
+}

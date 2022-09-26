@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Methods Related to Users
+ *
+ * PHP version 7.4
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Raja kumar <raja@shorthillstech.com>
+ * @copyright 2022 No Copyright
+ * @license   No Licence
+ * @link      No Link
+ */
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
@@ -11,11 +22,24 @@ use App\Jobs\SendLeadsToAdminMailJob;
 use Illuminate\Support\Facades\Validator;
 use App\Jobs\SendRegisteredCustomerMailJob;
 
+/**
+ * Class for methods related to User
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Raja kumar <raja@shorthillstech.com>
+ * @copyright 2022 No Copyright
+ * @license   No Licence
+ * @version   Release: 0.1
+ * @link      No Link
+ */
 class UserController extends Controller
 {
     /**
      * Display a listing of the users.
+     *
      * @param $request Illuminate\Http\Request
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -37,49 +61,62 @@ class UserController extends Controller
         }
         
         if (!$user->isEmpty()) {
-            return response()->json([
+            return response()->json(
+                [
                 "success" => "true",
                 "code" => 200,
                 "message" => "User data found",
                 "Total User:" => count($user),
                 "data" => $user
-            ], 200);
+                ],
+                200
+            );
         }
-        return response()->json([
+        return response()->json(
+            [
             "status" => "fail",
             "code" => 400,
             "message" => "User data not found"
-        ], 400);
+            ],
+            400
+        );
     }
 
     /**
-     * Display a listing of the user.
+     * Display user of a particular id.
+     *
      * @param $userId id attribute of the users table
+     *
      * @return \Illuminate\Http\Response
      */
     public function getUserById($userId)
     {
         $user = User::find($userId);
         if ($user) {
-            return response()->json([
+            return response()->json(
+                [
                 "success" => "true",
                 "code" => 200,
                 "message" => "User data found where ID is equal to $userId",
                 "data" => $user
-            ], 200);
+                ],
+                200
+            );
         }
-        return response()->json([
+        return response()->json(
+            [
             "status" => "fail",
             "code" => 404,
             "message" => "User data not found"
-        ], 404);
+            ],
+            404
+        );
     }
-
 
     /**
      * Create and store new user in database
      *
-     * @Request $request request body
+     * @param $request request body
      *
      * @return response
      */
@@ -87,30 +124,41 @@ class UserController extends Controller
     {
         $user = User::create($request->all());
         if ($user) {
-            $userMatchedWithEmail = User::where("email", "=", $request->email)->get();
+            $userMatchedWithEmail = User::where(
+                "email",
+                "=",
+                $request->email
+            )->get();
             $userAdmin = User::where("user_type", "=", 3)->get();
             // $userAdminFind = User::find($userAdmin[0]->id);
-        //     $userCustomer = User::find($userMatchedWithEmail[0]->id);
-        //     SendRegisteredCustomerMailJob::dispatch($userCustomer)->delay(now()->addSeconds(1));
-        //     SendLeadsToAdminMailJob::dispatch($userAdminFind, $userCustomer)->delay(now()->addSeconds(1));
-            return response()->json([
+            //$userCustomer = User::find($userMatchedWithEmail[0]->id);
+            //SendRegisteredCustomerMailJob::dispatch($userCustomer)->delay(now()->addSeconds(1));
+            //SendLeadsToAdminMailJob::dispatch($userAdminFind, $userCustomer)
+                //->delay(now()->addSeconds(1));
+            return response()->json(
+                [
                 "success" => "true",
                 "code" => 201,
                 "message" => "User data saved successfully",
                 "data" => $user
-            ], 201);
+                ],
+                201
+            );
         }
-        return response()->json([
+        return response()->json(
+            [
             "success" => "false",
             "code" => 400,
             "message" => "Failed to save user data"
-        ], 400);
+            ],
+            400
+        );
     }
 
     /**
      * Login with email and password with validations
      *
-     * @Request $request request body
+     * @param $request request body
      *
      * @return response
      */
@@ -138,11 +186,14 @@ class UserController extends Controller
 
         //Authentication
         if (count($user) === 0) {
-            return response()->json([
+            return response()->json(
+                [
                 "success" => "false",
                 "code" => 400,
                 "message" => "Wrong email or password"
-            ], 400);
+                ],
+                400
+            );
         }
 
         $u = User::find($user[0]['id']);
@@ -189,8 +240,8 @@ class UserController extends Controller
     /**
      * Update the user data in storage by ID.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param $userId id attribute of the users table
+     * @param $request \Illuminate\Http\Request
+     * @param $userId  id attribute of the users table
      *
      * @return \Illuminate\Http\Response
      */
@@ -199,25 +250,32 @@ class UserController extends Controller
         $user = User::find($userId);
         $user->update($request->all());
         if ($user) {
-            return response()->json([
+            return response()->json(
+                [
                 "success" => "true",
                 "code" => 200,
                 "message" => "User data with ID = $userId updated successfully",
                 "data" => $user
-            ], 200);
+                ],
+                200
+            );
         }
 
-        return response()->json([
+        return response()->json(
+            [
             "success" => "false",
             "code" => 400,
             "message" => "Failed to update user data with ID = $userId"
-        ], 400);
+            ],
+            400
+        );
     }
 
     /**
      * Remove the specified user from storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param $request \Illuminate\Http\Request
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
@@ -225,18 +283,25 @@ class UserController extends Controller
         $userFind = User::find($request->input('id'));
         $userDelete = User::destroy($request->input('id'));
         if ($userDelete) {
-            return response()->json([
+            return response()->json(
+                [
                 "success" => "true",
                 "code" => 200,
-                "message" => "User data with ID = $userFind->id deleted successfully",
-            ], 200);
+                "message" => "User data with ID = $userFind->id 
+                    deleted successfully",
+                ],
+                200
+            );
         }
 
-        return response()->json([
+        return response()->json(
+            [
             "success" => "false",
             "code" => 400,
             "message" => "Failed to delete user data with ID = $userFind->id"
-        ], 400);
+            ],
+            400
+        );
     }
 
     /**
@@ -248,25 +313,39 @@ class UserController extends Controller
     {
         $user = User::where('user_type', '=', 1)->get();
         if (count($user)) {
-            return response()->json([
+            return response()->json(
+                [
                 "success" => "true",
                 "code" => 200,
                 "message" => "User data found",
                 "data" => $user
-            ], 200);
+                ],
+                200
+            );
         }
-        return response()->json([
+        return response()->json(
+            [
             "status" => "fail",
             "code" => 400,
             "message" => "User data not found"
-        ], 400);
+            ],
+            400
+        );
     }
 
+    /**
+     * Updates the user type
+     *
+     * @param $req Illuminate\Http\Request
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function updateUserType(Request $req)
     {
         if ($req->isMethod('patch')) {
             $userType = $req->input();
-            User::where('id', $userType['id'])->update(['user_type'=>$userType['user_type']]);
+            User::where('id', $userType['id'])
+                ->update(['user_type'=>$userType['user_type']]);
             return response()->json(
                 ['message'=>'user type udated succesfully.'],
                 202
@@ -274,11 +353,19 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Display the Details when clicked on profile link
+     *
+     * @param $userId user id
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function profileDetailsById($userId)
     {
         $user = User::find($userId);
         if ($user) {
-            return response()->json([
+            return response()->json(
+                [
                 "success" => "true",
                 "code" => 200,
                 "message" => "User data found where ID is equal to $userId",
@@ -287,22 +374,34 @@ class UserController extends Controller
                 "Phone Number" => $user->phone,
                 "Email" => $user->email,
                 "Address" => $user->address
-            ], 200);
+                ],
+                200
+            );
         }
-        return response()->json([
+        return response()->json(
+            [
             "status" => "fail",
             "code" => 404,
             "message" => "User data not found"
-        ], 404);
+            ],
+            404
+        );
     }
 
+    /**
+     * Displays the Dealer page details
+     *
+     * @param $uid User Id of the dealer
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function dealerDataShow($uid)
     {
 
         $details = DB::table('cars')
-        ->join('users', 'cars.id', '=', 'users.car_id')
-        ->where('user_id', $uid)
-        ->get();
+            ->join('users', 'cars.id', '=', 'users.car_id')
+            ->where('user_id', $uid)
+            ->get();
         
         $datacount = Count($details);
 

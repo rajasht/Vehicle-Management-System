@@ -1,20 +1,55 @@
 <?php
-
+/**
+ * Methods Related to User Registration
+ *
+ * PHP version 7.4
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Raja kumar <raja@shorthillstech.com>
+ * @copyright 2022 No Copyright
+ * @license   No Licence
+ * @link      No Link
+ */
 namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
 
+/**
+ * Class for methods related to User Registration
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Raja kumar <raja@shorthillstech.com>
+ * @copyright 2022 No Copyright
+ * @license   No Licence
+ * @version   Release: 0.1
+ * @link      No Link
+ */
 class RegistrationController extends Controller
 {
+    /**
+     * Display a listing of the users.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return view('registration-form');
     }
     
+    /**
+     * Register the new user.
+     *
+     * @param $req Illuminate\Http\Request
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function register(Request $req)
     {
-        $req->validate([
+        $req->validate(
+            [
             'first_name'=>'required|string',
             'last_name'=>'required|string',
             'phone'=>'required|numeric|digits:10',
@@ -22,7 +57,8 @@ class RegistrationController extends Controller
             'address'=>'required',
             'password'=>'required',
             'confirm_password'=>'required|same:password'
-        ]);
+            ]
+        );
         
         $user = new User;
 
@@ -37,9 +73,24 @@ class RegistrationController extends Controller
         $result = $user->save();
     
         if ($result) {
-            return ["Result"=>"User Added Successfully."];
+            return response()->json(
+                [
+                "success" => "true",
+                "code" => 201,
+                "message" => "Invoice data saved successfully",
+                "data" => $result
+                ],
+                201
+            );
         } else {
-            return ["Result"=>"User Not Added."];
+            return response()->json(
+                [
+                "success" => "false",
+                "code" => 400,
+                "message" => "Failed to Register User."
+                ],
+                400
+            );
         }
     }
 }

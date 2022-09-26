@@ -274,8 +274,7 @@ class InventoryControllerTest extends TestCase
         )->assertStatus(Response::HTTP_CREATED);
         
         //Act
-        $this->get('api/inventory-data/1')
-            ->assertStatus(200)
+        $this->get('api/inventory-data/1')->assertStatus(200)
             ->assertJsonFragment(["status"=>1]);
     }
     

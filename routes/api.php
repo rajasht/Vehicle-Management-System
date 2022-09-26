@@ -99,3 +99,4 @@ Route::post('cart',[CartController::class,'addToCart'])->name('cart.store');
 Route::get('cart',[CartController::class,'index']);
 Route::get('cart/{userId}',[CartController::class,'getUserCart']);
 Route::delete('cart/{Id}',[CartController::class,'removeFromCart']);
+

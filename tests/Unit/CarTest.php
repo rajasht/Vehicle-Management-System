@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * Unit Test Cases For car methods
+ *
+ * PHP version 7.4
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Squiz Pty Ltd <products@squiz.net>
+ * @copyright 2022 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   No Licence
+ * @link      No Link
+ */
 namespace Tests\Unit;
 
 use App\Models\Car;
@@ -7,18 +18,30 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 
+/**
+ * Parses and verifies the doc comments for files.
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Raja kumar <raja@shorthillstech.com>
+ * @copyright 2022 No Copyright
+ * @license   No Licence
+ * @version   Release: 0.1
+ * @link      No Link
+ */
 class CarTest extends TestCase
 {
     use RefreshDatabase;
 
     /**
-     * A basic unit test example.
+     * A basic unit test to find duplicate entry of car
      *
-     * @return void
+     * @return $this as result
      */
-    public function test_car_duplication()
+    public function testCarDuplication()
     {
-        $car1 = Car::make([
+        $car1 = Car::make(
+            [
             "car_name" => "Venue",
             "price_rs" => 1070000,
             "brand" => "Hyundai",
@@ -42,8 +65,11 @@ class CarTest extends TestCase
             "width_mm" => 1770,
             "height_mm" => 1617,
             "wheel_base_mm" => 2500
-        ]);
-        $car2 = Car::make([
+            ]
+        );
+
+        $car2 = Car::make(
+            [
             "car_name" => "Dzire",
             "brand" => "Maruti Suzuki",
             "transmission" => "Manual",
@@ -69,14 +95,21 @@ class CarTest extends TestCase
             "wheel_count"=> 4,
             "record_status"=> 1,
             "user_id"=> 2
-        ]);
+            ]
+        );
 
         $this->assertTrue($car1->car_name != $car2->car_name);
     }
 
-    public function test_delete_car()
+    /**
+     * A basic unit test to delete car from data
+     *
+     * @return $this as result
+     */
+    public function testDeleteCar()
     {
-        $car = Car::make([
+        $car = Car::make(
+            [
             "car_name" => "Dzire",
             "brand" => "Maruti Suzuki",
             "transmission" => "Manual",
@@ -102,7 +135,8 @@ class CarTest extends TestCase
             "wheel_count"=> 4,
             "record_status"=> 1,
             "user_id"=> 2
-        ]);
+            ]
+        );
         $car = Car::first();
         if ($car) {
             $car->delete();
@@ -110,7 +144,12 @@ class CarTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function test_stores_new_car()
+    /**
+     * A basic unit test to add new car
+     *
+     * @return $this as result
+     */
+    public function testStoresNewCar()
     {
 
         $payload = [
@@ -141,9 +180,9 @@ class CarTest extends TestCase
             "user_id"=> 2
         ];
         $this->json('post', 'api/cars', $payload)
-             ->assertStatus(Response::HTTP_CREATED)
-             ->assertJsonStructure(
-                 [
+            ->assertStatus(Response::HTTP_CREATED)
+            ->assertJsonStructure(
+                [
                      'data' => [
                          'id',
                          'car_name',
@@ -172,8 +211,8 @@ class CarTest extends TestCase
                         'record_status',
                         'user_id',
                          ]
-                 ]
-             );
+                ]
+            );
         $this->assertDatabaseHas('cars', $payload);
         $this->assertDatabaseMissing('cars', ["vin" => "4ABCD56EFGH789000"]);
     }

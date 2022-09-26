@@ -1,17 +1,39 @@
 <?php
-
+/**
+ * Methods Related to Cart
+ *
+ * PHP version 7.4
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Sagnik Mandal <sagnik@shorthillstech.com>
+ * @copyright 2022 No Copyright
+ * @license   No Licence
+ * @link      No Link
+ */
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use GuzzleHttp\Psr7\Message;
 use Illuminate\Http\Request;
 
+/**
+ * Class for methods related to Cart
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Sagnik Mandal <sagnik@shorthillstech.com>
+ * @copyright 2022 No Copyright
+ * @license   No Licence
+ * @version   Release: 0.1
+ * @link      No Link
+ */
 class CartController extends Controller
 {
     /**
      * Create new cart and store in database
      *
-     * @Request $request request body
+     * @param $request request body
      *
      * @return response
      */
@@ -20,32 +42,43 @@ class CartController extends Controller
         // return $request->all();
         if ($request->status == 1) {
             $cartFind = Cart::where('user_id', '=', $request->user_id)
-                        ->where('vehicle_type_id', '=', $request->vehicle_type_id)->get()->first();
+            ->where('vehicle_type_id', '=', $request->vehicle_type_id)
+            ->get()->first();
             $cartDelete = Cart::destroy($cartFind->id);
             if ($cartDelete) {
-                return response()->json([
+                return response()->json(
+                    [
                     "success" => "true",
                     "code" => 200,
-                    "message" => "Cart data with ID = $cartFind->id removed from cart successfully",
+                    "message" => "Cart data with ID = $cartFind->id removed 
+                        from cart successfully",
                     "data" => $cartFind
-                ], 200);
+                    ],
+                    200
+                );
             }
         }
         $request['status'] = 1;
         $cart = Cart::create($request->all());
         if ($cart) {
-            return response()->json([
+            return response()->json(
+                [
                 "success" => "true",
                 "code" => 201,
                 "message" => "Item added successfully to the cart",
                 "data" => $cart
-            ], 201);
+                ],
+                201
+            );
         }
-        return response()->json([
+        return response()->json(
+            [
             "success" => "false",
             "code" => 400,
             "message" => "Failed to save cart data"
-        ], 400);
+            ],
+            400
+        );
     }
 
     /**
@@ -57,18 +90,24 @@ class CartController extends Controller
     {
         $cart = Cart::all();
         if (!$cart ->isEmpty()) {
-            return response()->json([
+            return response()->json(
+                [
                 "success" => "true",
                 "code" => 200,
                 "message" => "Cart data found",
                 "data" => $cart
-            ], 200);
+                ],
+                200
+            );
         }
-        return response()->json([
+        return response()->json(
+            [
             "status" => "true",
             "code" => 200,
             "message" => "No records found"
-        ], 200);
+            ],
+            200
+        );
     }
 
     /**
@@ -82,24 +121,30 @@ class CartController extends Controller
     {
         $cart = Cart::where('user_id', '=', $userId)->get();
         if (count($cart)) {
-            return response()->json([
+            return response()->json(
+                [
                 "success" => "true",
                 "code" => 200,
                 "message" => "Cart data found of user ID = $userId",
                 "data" => $cart
-            ], 200);
+                ],
+                200
+            );
         }
-        return response()->json([
+        return response()->json(
+            [
             "status" => "true",
             "code" => 200,
             "message" => "No records found"
-        ], 200);
+            ],
+            200
+        );
     }
 
     /**
      * Remove the specified cart data from storage.
      *
-     * @param  $ID id attribute of the carts table
+     * @param $ID id attribute of the carts table
      *
      * @return \Illuminate\Http\Response
      */
@@ -108,17 +153,24 @@ class CartController extends Controller
         $cart = Cart::find($ID);
         $cartDelete = Cart::destroy($ID);
         if ($cartDelete) {
-            return response()->json([
+            return response()->json(
+                [
                 "success" => "true",
                 "code" => 200,
-                "message" => "Cart data with ID = $ID removed from cart successfully",
+                "message" => "Cart data with ID = $ID removed 
+                    from cart successfully",
                 "data" => $cart
-            ], 200);
+                ],
+                200
+            );
         }
-        return response()->json([
+        return response()->json(
+            [
             "success" => "false",
             "code" => 400,
             "message" => "Failed to delete cart data with ID = $ID"
-        ], 400);
+            ],
+            400
+        );
     }
 }
