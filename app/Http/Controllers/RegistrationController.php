@@ -77,7 +77,7 @@ class RegistrationController extends Controller
                 [
                 "success" => "true",
                 "code" => 201,
-                "message" => "Invoice data saved successfully",
+                "message" => "User data saved successfully",
                 "data" => $result
                 ],
                 201
