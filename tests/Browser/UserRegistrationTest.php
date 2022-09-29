@@ -39,7 +39,7 @@ class UserRegistrationTest extends DuskTestCase
                     ->assertPathIs('/profile/customer')
                     ->assertSee('My Cart')
                     ->clickLink('Logout')
-                    ->assertGuest();;
+                    ->assertGuest();
         });
     }
 }

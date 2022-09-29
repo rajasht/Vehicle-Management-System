@@ -50,8 +50,7 @@ class CartController extends Controller
                     [
                     "success" => "true",
                     "code" => 200,
-                    "message" => "Cart data with ID = $cartFind->id removed 
-                        from cart successfully",
+                    "message" => "Cart data with ID = $cartFind->id removed from cart successfully",
                     "data" => $cartFind
                     ],
                     200
@@ -65,7 +64,7 @@ class CartController extends Controller
                 [
                 "success" => "true",
                 "code" => 201,
-                "message" => "Item added successfully to the cart",
+                "message" => "Vehicle added successfully to the cart",
                 "data" => $cart
                 ],
                 201
