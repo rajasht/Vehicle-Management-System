@@ -59,7 +59,7 @@ class RegistrationControllerTest extends TestCase
 
     /**
      * A positive feature test to check User get registered sucessfully
-     * 
+     *
      * @test
      *
      * @return void
@@ -89,11 +89,11 @@ class RegistrationControllerTest extends TestCase
 
 
     /**
-     * A positive feature test to validate unsucsessful 
+     * A positive feature test to validate unsucsessful
      * registration if any field missing
      *
-     * @test 
-     * 
+     * @test
+     *
      * @return void
      */
     public function newUserRegistrationWithoutEmail()
@@ -115,7 +115,7 @@ class RegistrationControllerTest extends TestCase
 
     /**
      * A positive feature test to check the duplicate user registration
-     * 
+     *
      * @test
      *
      * @return void
@@ -151,7 +151,7 @@ class RegistrationControllerTest extends TestCase
     
     /**
      * A negative feature test to check the duplicate user registration
-     * 
+     *
      * @test
      *
      * @return void

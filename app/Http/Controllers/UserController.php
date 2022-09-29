@@ -131,10 +131,10 @@ class UserController extends Controller
             )->get();
             $userAdmin = User::where("user_type", "=", 3)->get();
             // $userAdminFind = User::find($userAdmin[0]->id);
-            //$userCustomer = User::find($userMatchedWithEmail[0]->id);
-            //SendRegisteredCustomerMailJob::dispatch($userCustomer)->delay(now()->addSeconds(1));
-            //SendLeadsToAdminMailJob::dispatch($userAdminFind, $userCustomer)
-                //->delay(now()->addSeconds(1));
+            // $userCustomer = User::find($userMatchedWithEmail[0]->id);
+            // SendRegisteredCustomerMailJob::dispatch($userCustomer)->delay(now()->addSeconds(1));
+            // SendLeadsToAdminMailJob::dispatch($userAdminFind, $userCustomer)
+            //     ->delay(now()->addSeconds(1));
             return response()->json(
                 [
                 "success" => "true",
@@ -411,5 +411,13 @@ class UserController extends Controller
         } else {
             return "No cars Found/Not a Dealer.";
         }
+    }
+
+    public function logout (Request $request) 
+    {
+        $accessToken = auth()->user()->token();
+        $token= $request->user()->tokens->find($accessToken);
+        $token->revoke();
+        return response(['message' => 'You have been successfully logged out.'], 200);
     }
 }
