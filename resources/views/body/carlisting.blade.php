@@ -104,7 +104,8 @@
                             @csrf
                             <input type="hidden" name="vehicle_type_id" value="{{ $VID = $car->id }}">
                             <input type="hidden" name="vehicle_type" value="{{ $VType = "car" }}">
-                            <button class="btn  btn-success">Buy Now</button>
+                            <input type="hidden" name="vehicle_name" value="{{ $VName = $car->car_name }}">
+                            <button dusk="buy_now_{{$VID}}" class="btn  btn-success">Buy Now</button>
                     </form>
                     </td>
                 </tr>

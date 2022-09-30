@@ -31,25 +31,37 @@
                 ?>" readonly />
             </div>
             <div class="form-group col-md-6">
+                <label for="">Vehicle Name</label>
+                <input type="text" name="vehicle_name" class="form-control" value="<?php
+                if (isset($_GET['vehicle_name'])) echo $_GET['vehicle_name'];
+                ?>" readonly/>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="form-group col-md-6">
                 <label for="">Vehicle Type</label>
                 <input type="text" name="vehicle_type" class="form-control" value="<?php
                 if (isset($_GET['vehicle_type'])) echo $_GET['vehicle_type'];
                 ?>" readonly/>
             </div>
-        </div>
-        <div class="row">
+            
             <div class="form-group col-md-6 required">
                 <label for="">Customer User ID</label>
                 <input type="text" name='customer_user_id'id="" class="form-control" value="{{session('uid')}}" readonly/>
-    
             </div>
+        </div>
+    
+        <div class="row">
+
+            
             <div class="form-group col-md-6 required">
                 <label for="">Dealer User ID</label>
                 <input type="text" name="dealer_user_id" id="" class="form-control" value=""/>
             </div>
-        </div>
-    
-        <div class="row">
+
             <div class="form-group col-md-6 required">
                 <label for="">Payment Mode</label>
                 <select name="payment_mode" id="" class="form-control">

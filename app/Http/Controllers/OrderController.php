@@ -14,6 +14,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Car;
 use Illuminate\Http\Request;
 
 /**
@@ -105,7 +106,7 @@ class OrderController extends Controller
                 [
                 "success" => "true",
                 "code" => 201,
-                "message" => "Order data saved successfully",
+                "message" => "Order Placed successfully.",
                 "data" => $order
                 ],
                 201
