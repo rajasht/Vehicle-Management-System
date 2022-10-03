@@ -399,11 +399,11 @@ class UserController extends Controller
     {
 
         $details = DB::table('cars')
-            ->join('users', 'cars.id', '=', 'users.car_id')
+            // ->join('users', 'cars.id', '=', 'users.car_id')
             ->where('user_id', $uid)
             ->get();
         
-        $datacount = Count($details);
+            $datacount = Count($details);
 
         if ($datacount>0) {
             $data = compact('details');

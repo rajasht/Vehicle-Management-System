@@ -43,7 +43,7 @@
             </div>
             <div class="form-group col-md-4 required">
                 <label for="">Transmission</label>
-                <select class="form-control" id="winner">
+                <select class="form-control" name="transmission" id="winner">
                   <option>Manual</option>
                   <option>Automatic</option>
                 </select>
@@ -70,7 +70,7 @@
             </div>
             <div class="form-group col-md-4 required">
                 <label for="">Seating Capacity</label>
-                <select class="form-control" id="winner">
+                <select class="form-control" name="seats" id="winner">
                   <option>4</option>
                   <option>5</option>
                   <option>6</option>
@@ -81,7 +81,7 @@
         <div class="row">
             <div class="form-group col-md-4 required">
                 <label for="">Fuel Type</label>
-                <select class="form-control" id="winner">
+                <select class="form-control" name="fuel" id="winner">
                   <option>Petrol</option>
                   <option>Diesel</option>
                 </select>
@@ -117,7 +117,7 @@
             </div>
             <div class="form-group col-md-4 required">
                 <label for="">Body Type</label>
-                <select class="form-control" id="winner">
+                <select class="form-control" name="body_type" id="winner">
                   <option>Hatchback</option>
                   <option>Sedan</option>
                   <option>SUV</option>
