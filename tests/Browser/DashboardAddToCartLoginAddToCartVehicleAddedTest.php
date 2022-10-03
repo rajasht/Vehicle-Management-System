@@ -32,7 +32,7 @@ class DashboardAddToCartLoginAddToCartVehicleAddedTest extends DuskTestCase
 {
     /**
      * A function to browse the flow of cart operation
-     *
+     *  
      * @test
      * @return $this
      */
@@ -62,7 +62,9 @@ class DashboardAddToCartLoginAddToCartVehicleAddedTest extends DuskTestCase
                     ->assertSee('Tierra')
                     ->assertSee('Cart: 1')
                     ->press('Remove from Cart')
-                    ->assertSee('Cart data with ID = 17 removed from cart successfully')
+                    ->assertSee(
+                        'Cart data with ID = 19 removed from cart successfully'
+                    )
                     ->assertPathIs('/api/cart')
                     ->visit('/logout')
                     ->visit('/login')

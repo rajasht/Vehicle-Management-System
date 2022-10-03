@@ -33,6 +33,8 @@ class GetFilteredVehicleTest extends DuskTestCase
     /**
      * A function to display filtered vehicle list by Name
      *
+     * @group Vehicle_filter_test
+     * 
      * @test
      * @return $this
      */
@@ -54,6 +56,8 @@ class GetFilteredVehicleTest extends DuskTestCase
     /**
      * A function to display filtered vehicle list by Brand
      *
+     * @group Vehicle_filter_test
+     * 
      * @test
      * @return $this
      */
@@ -74,6 +78,8 @@ class GetFilteredVehicleTest extends DuskTestCase
     /**
      * A function to display filtered vehicle list by Model
      *
+     * @group Vehicle_filter_test
+     * 
      * @test
      * @return $this
      */
@@ -95,6 +101,8 @@ class GetFilteredVehicleTest extends DuskTestCase
     /**
      * A function to display filtered vehicle list by Model year
      *
+     * @group Vehicle_filter_test
+     * 
      * @test
      * @return $this
      */
@@ -141,6 +149,8 @@ class GetFilteredVehicleTest extends DuskTestCase
     /**
      * A function to display filtered vehicle list by Transmission type
      *
+     * @group Vehicle_filter_test
+     * 
      * @test
      * @return $this
      */
@@ -163,6 +173,8 @@ class GetFilteredVehicleTest extends DuskTestCase
     /**
      * A function to display filtered vehicle list by Brand and Model Year
      *
+     * @group Vehicle_filter_test
+     * 
      * @test
      * @return $this
      */
@@ -181,10 +193,12 @@ class GetFilteredVehicleTest extends DuskTestCase
             }
         );
     }
-    
+
     /**
      * A function to display filtered vehicle list by Brand, Model and Model Year
      *
+     * @group Vehicle_filter_test
+     * 
      * @test
      * @return $this
      */
