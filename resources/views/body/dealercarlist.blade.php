@@ -38,8 +38,10 @@
                     <td>{{$dt->mileage_kmpl}}</td>
                     <td>{{$dt->colors_available}}</td>
                     <td>{{$dt->price_rs}}</td>
+                    
                     <td>
-                        <a href="/">
+                        
+                        <a href="/addcarresponse">
                             <button class="btn  btn-primary">Sell Car</button>
                         </a>
                     </td>
